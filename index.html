@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accepted-origin validation receiver</title>
+</head>
+<body>
+  <h1>Accepted-origin validation receiver</h1>
+  <p>This page contains the CoinCasino document for a controlled accepted-origin test.
+  Messages are checked against the actual CoinCasino origin and iframe source.
+  No token is transmitted to another server.</p>
+  <script>
+    window.addEventListener('message', event => {
+      const victim = document.getElementById('victim');
+      if (event.origin === 'https://www.coincasino.com' &&
+          event.source === victim.contentWindow &&
+          event.data && event.data.auditToken) {
+        window.__capturedToken = event.data.auditToken;
+      }
+    });
+  </script>
+  <iframe id="victim" name="cc-victim" src="https://www.coincasino.com/en"
+          width="1200" height="800" title="CoinCasino validation document"></iframe>
+</body>
+</html>
